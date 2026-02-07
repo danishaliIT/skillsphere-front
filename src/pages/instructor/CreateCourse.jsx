@@ -187,13 +187,16 @@ const CreateCourse = () => {
     setCourseData({ ...courseData, modules: newModules });
   };
 
-  const addLesson = (mIdx, wIdx) => {
-    const newModules = [...courseData.modules];
-    newModules[mIdx].weeks[wIdx].lessons.push({
-      title: 'New Topic', content_type: 'Video', order: newModules[mIdx].weeks[wIdx].lessons.length + 1
-    });
-    setCourseData({ ...courseData, modules: newModules });
-  };
+ const addLesson = (mIdx, wIdx) => {
+  const newModules = [...courseData.modules];
+  const currentLessons = newModules[mIdx].weeks[wIdx].lessons;
+  newModules[mIdx].weeks[wIdx].lessons.push({
+    title: 'New Topic', 
+    content_type: 'Video', 
+    order: currentLessons.length + 1 // Ensure this is always present
+  });
+  setCourseData({ ...courseData, modules: newModules });
+};
 
   const updateNested = (mIdx, wIdx, lIdx, field, val) => {
     const newModules = [...courseData.modules];
