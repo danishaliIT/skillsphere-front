@@ -221,6 +221,25 @@ const CreateCourse = () => {
     </div>
   );
 
+  const handleQuickSaveModule = async (mIdx) => {
+  const moduleToSave = courseData.modules[mIdx];
+  if (!slug) return alert("Pehle basic course info (Step 1) save karein.");
+
+  try {
+    setLoading(true);
+    // Hum PATCH request bhejenge taake sirf ye module update ho
+    await API.patch(`courses/${slug}/`, {
+      modules: [moduleToSave] 
+    });
+    alert(`Module "${moduleToSave.title}" saved successfully! ✅`);
+  } catch (err) {
+    console.error("Quick Save Error:", err);
+    alert("Failed to save module. Check console for details.");
+  } finally {
+    setLoading(false);
+  }
+};
+
   return (
     <div className="min-h-screen bg-[#F8FAFC] pb-32 font-bold italic text-slate-900">
       
@@ -537,6 +556,32 @@ const CreateCourse = () => {
   </div>
 )}
 
+        {/* Module Header with Quick Save */}
+<div className="flex items-center justify-between mb-10">
+  <div className="flex items-center gap-6 flex-1">
+    <div className="w-14 h-14 bg-slate-900 rounded-[1.2rem] flex items-center justify-center text-white text-xl font-black italic shadow-lg">
+      {mIdx + 1}
+    </div>
+    <div className="flex-1">
+      <label className="text-[10px] uppercase tracking-[0.3em] text-slate-400 block mb-1">Phase Identifier</label>
+      <input 
+        value={module.title}
+        onChange={(e) => updateNested(mIdx, null, null, 'title', e.target.value)}
+        className="w-full text-3xl font-black italic uppercase text-slate-800 bg-transparent outline-none border-b-2 border-transparent focus:border-blue-600 transition-all"
+        placeholder="e.g., FOUNDATION ELEMENTS"
+      />
+    </div>
+  </div>
+  
+  {/* Naya Quick Save Button */}
+  <button 
+    onClick={() => handleQuickSaveModule(mIdx)}
+    className="ml-4 px-4 py-2 bg-blue-50 text-blue-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all flex items-center gap-2"
+  >
+    <Save size={14}/> Save Progress
+  </button>
+</div>
+        
       </div>
     </div>
   );
