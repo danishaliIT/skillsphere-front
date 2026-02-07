@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #2563eb;
+  --color-accent: #f59e0b;
+}
+
+/* Global colored input borders for better visibility */
+input, textarea, select {
+  border: 2px solid rgba(59,130,246,0.08); /* blue-400 at low opacity */
+  border-radius: 12px;
+  transition: border-color 150ms ease-in-out, box-shadow 150ms ease-in-out;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: rgba(59,130,246,0.9);
+  box-shadow: 0 6px 18px rgba(37,99,235,0.06);
+}
+
+/* Keep smaller inputs consistent */
+input[type="date"], input[type="number"], input[type="email"], input[type="text"] {
+  border-radius: 12px;
+}
